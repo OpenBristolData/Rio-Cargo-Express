@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Perfil</title>
+    <title>Registrar Paquete</title>
     <!-- Bootstrap 4 -->
     <link
       rel="stylesheet"
@@ -14,11 +15,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
-    <!-- Bootstrap Datepicker -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
-    />
     <link
       rel="icon"
       type="image/png"
@@ -27,11 +23,12 @@
     />
     <style>
       body {
+        margin: 0;
         background: #00205d;
         font-family: Arial, sans-serif;
       }
 
-      /* Navbar Styles */
+      /* Navbar container */
       .navbar-container {
         display: flex;
         align-items: center;
@@ -40,7 +37,7 @@
         flex-wrap: wrap;
       }
 
-      .navbar-custom {
+      .navbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -57,7 +54,7 @@
         margin-right: 15px;
       }
 
-      .navbar-nav-custom {
+      .navbar ul {
         display: flex;
         list-style: none;
         margin: 0;
@@ -65,12 +62,12 @@
         flex-wrap: wrap;
       }
 
-      .navbar-nav-custom li {
+      .navbar ul li {
         margin: 0 18px;
         position: relative;
       }
 
-      .navbar-nav-custom li a {
+      .navbar ul li a {
         text-decoration: none;
         color: #fff;
         font-weight: 500;
@@ -78,7 +75,7 @@
         font-size: 15px;
       }
 
-      .navbar-nav-custom li a:hover {
+      .navbar ul li a:hover {
         color: #ffd700;
       }
 
@@ -98,8 +95,7 @@
       .nav-icons a:hover {
         color: #ffd700;
       }
-
-      .navbar-nav-custom li ul.dropdown-menu-custom {
+      .navbar ul li ul.dropdown-menu {
         display: none;
         position: absolute;
         top: 100%;
@@ -112,11 +108,11 @@
         z-index: 1000;
       }
 
-      .navbar-nav-custom li ul.dropdown-menu-custom li {
+      .navbar ul li ul.dropdown-menu li {
         margin: 0;
       }
 
-      .navbar-nav-custom li ul.dropdown-menu-custom li a {
+      .navbar ul li ul.dropdown-menu li a {
         display: block;
         padding: 8px 15px;
         color: #fff;
@@ -124,26 +120,24 @@
         white-space: nowrap;
       }
 
-      .navbar-nav-custom li ul.dropdown-menu-custom li a:hover {
+      .navbar ul li ul.dropdown-menu li a:hover {
         background: #002a99;
         color: #ffd700;
       }
 
       /* Show dropdown on hover */
-      .navbar-nav-custom li:hover > ul.dropdown-menu-custom {
+      .navbar ul li:hover > ul.dropdown-menu {
         display: block;
       }
 
-      .profile-icon {
+      .profile {
         background: #007bff;
         border-radius: 50%;
-        padding: 6px;
+        padding: 6px 6px;
       }
-
       .nav-icons img {
         width: 30px;
       }
-
       /* Form Card */
       .card-custom {
         background-color: #0034c5;
@@ -155,92 +149,36 @@
         font-weight: 600;
       }
 
-      .form-control-custom {
+      .card-custom input,
+      .card-custom textarea {
         background-color: #6c7ecb;
         border: none;
         border-radius: 15px;
         padding: 12px;
         color: white;
         width: 100%;
-        height: auto; /* Add this line */
-        min-height: 44px; /* Add this line to maintain consistent height */
-        line-height: 1.5; /* Add this line for better text alignment */
       }
 
-      /* Add this rule to specifically target select elements */
-      .form-control-custom select {
-        height: auto;
-        padding: 12px;
-      }
-
-      /* Ensure the selected option text is fully visible */
-      .form-control-custom option:checked,
-      .form-control-custom option:selected {
-        background-color: #6c7ecb;
-        color: white;
-        padding: 10px;
-      }
-      .form-control-custom::placeholder,
-      .form-control-custom select {
+      .card-custom input::placeholder,
+      .card-custom textarea::placeholder {
         color: #d9ddf5;
-        font-size: 13px;
       }
 
-      .form-control-custom:focus {
-        background-color: #6c7ecb;
-        color: white;
-        box-shadow: none;
-        border: none;
+      /* Upload box */
+      .upload-box {
+        background-color: #7b8ee0;
+        border: 2px dashed #bfc7f3;
+        border-radius: 12px;
+        padding: 40px 15px;
+        text-align: center;
+        color: #e5e8ff;
+        font-size: 14px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+        cursor: pointer;
       }
-
-      .form-control-custom option {
-        background-color: #6c7ecb;
-        color: white;
-        padding: 10px;
-      }
-
-      /* Fix for dropdown placeholder text */
-      .form-control-custom:invalid {
-        color: #d9ddf5;
-        font-size: 18px;
-      }
-
-      .form-control-custom option[value=""][disabled] {
-        display: none;
-      }
-
-      /* Datepicker customization */
-      .datepicker {
-        background-color: #ffffff;
-        border-radius: 15px;
-        padding: 0;
-        border: none;
-      }
-
-      .datepicker table tr td,
-      .datepicker table tr th {
-        border-radius: 5px;
-      }
-
-      .datepicker table tr td.active,
-      .datepicker table tr td.active:hover {
-        background-color: #ffcc00;
-        color: #000;
-      }
-
-      .datepicker table tr td.day:hover {
-        background-color: #8a9de0;
-      }
-
-      .input-group-append {
-        margin-left: -40px;
-        z-index: 10;
-      }
-
-      .input-group-append .btn {
-        background: transparent;
-        border: none;
-        color: #d9ddf5;
+      .upload-box:hover {
+        background-color: #6a7ad8;
       }
 
       /* Toggle boxes */
@@ -255,8 +193,6 @@
         cursor: pointer;
         font-size: 15px;
         transition: 0.2s;
-        width: 220px; /* Reduced width for radio options */
-        flex: 0 0 auto;
       }
 
       .toggle-box input[type="checkbox"] {
@@ -264,7 +200,7 @@
         height: 18px;
         margin-right: 10px;
         cursor: pointer;
-        accent-color: #ff9900;
+        accent-color: #ff9900; /* checked orange */
       }
 
       .toggle-box input[type="radio"] {
@@ -272,7 +208,7 @@
         height: 18px;
         margin-right: 10px;
         cursor: pointer;
-        accent-color: #ff9900;
+        accent-color: #ff9900; /* checked orange */
       }
 
       .toggle-box.active {
@@ -290,111 +226,74 @@
         padding: 5px 50px;
         border: none;
         transition: 0.3s;
-        white-space: nowrap; /* Add this line to prevent text wrapping */
-        min-width: 150px; /* Optional: ensures button has minimum width */
       }
       .btn-save:hover {
         background-color: #cc0000;
       }
 
-      /* Profile image column */
-      .profile-image-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
+      /* Casillero */
+
+      .mi-casillero {
+        background-color: #0084f8;
+        border-radius: 50px;
         padding: 20px;
-      }
-
-      .profile-image-container {
-        position: relative;
-        width: 150px;
-        height: 150px;
-        margin-bottom: 20px;
-        cursor: pointer;
-      }
-
-      .profile-image {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background-color: #6c7ecb;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .profile-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .camera-icon {
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-        background: #007bff;
         color: white;
-        border-radius: 50%;
-        width: 32px;
-        height: 32px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        margin-bottom: 20px;
+      }
+
+      .casillero-box {
+        background-color: white;
+        border-radius: 0px 0px 40px 40px;
+        padding: 15px;
+        color: black;
+      }
+
+      .field {
+        padding: 5px 0;
+      }
+
+      .item-main {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: center;
-        border: 2px solid white;
-      }
-
-      .casillero-text {
-        color: #ffffff;
-        font-weight: bold;
-        font-size: 18px;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-
-      /* Preference section */
-      .preference-section {
-        margin-top: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #6c7ecb;
-      }
-
-      .preference-section h4 {
-        color: #ffffff;
-        font-size: 18px;
-        margin-bottom: 15px;
         font-weight: 600;
-      }
-
-      .preference-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-
-      .preference-label {
-        min-width: 180px;
-        margin-right: 15px;
-      }
-
-      .agency-select {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .note-text {
         font-size: 14px;
-        color: #d9ddf5;
-        margin-top: 10px;
-        margin-left: 195px; /* Align with dropdowns */
       }
 
-      /* Dropdown cards */
+      .item-sub {
+        font-size: 13px;
+        color: #333;
+        margin-top: 3px;
+      }
+
+      .casillero-box hr {
+        border: none;
+        height: 2px;
+        border-top: 1px solid #007bff;
+        background-color: #007bff; /* blue separator */
+        margin: 8px 0;
+      }
+
+      .copy-btn {
+        background-color: #ffcc00;
+        border: none;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .copy-btn i {
+        font-size: 14px;
+      }
       .dropdown-card {
         position: absolute;
-        top: 70px;
+        top: 70px; /* adjust below navbar */
         right: 20px;
         background: #ffffff;
         color: #000;
@@ -465,61 +364,14 @@
         color: #155724;
       }
 
-      /* Modern Calendar Styles */
-      .datepicker-dropdown {
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        border: none;
-        padding: 10px;
-      }
-
-      .datepicker table {
-        width: 100%;
-      }
-
-      .datepicker table tr td,
-      .datepicker table tr th {
-        text-align: center;
-        padding: 8px 5px;
-        border-radius: 50%;
-      }
-
-      .datepicker table tr td.day:hover {
-        background: #6c7ecb;
-        color: white;
-      }
-
-      .datepicker table tr td.active.active {
-        background: #ffcc00;
-        color: #000;
-        text-shadow: none;
-      }
-
-      .datepicker table tr td.today {
-        background: #0034c5;
-        color: white;
-      }
-
-      .datepicker table tr td.today:hover {
-        background: #002a99;
-        color: white;
-      }
-
-      .datepicker .datepicker-switch,
-      .datepicker .prev,
-      .datepicker .next {
-        color: #0034c5;
-        font-weight: bold;
-      }
-
       /* Responsive adjustments */
       @media (max-width: 992px) {
-        .navbar-custom {
+        .navbar {
           flex-wrap: wrap;
           border-radius: 20px;
           padding: 10px;
         }
-        .navbar-nav-custom {
+        .navbar ul {
           flex-direction: column;
           align-items: flex-start;
           width: 100%;
@@ -530,26 +382,13 @@
           width: 100%;
           justify-content: flex-start;
         }
-
-        .profile-image-col {
-          order: -1;
-          margin-bottom: 20px;
-        }
-
-        .preference-section {
-          margin-left: 0;
-        }
-
-        .note-text {
-          margin-left: 0;
-        }
       }
 
       @media (max-width: 768px) {
         .logo img {
           height: 50px;
         }
-        .navbar-nav-custom li {
+        .navbar ul li {
           margin: 6px 0;
         }
         .nav-icons a {
@@ -561,25 +400,6 @@
           right: 20px;
           min-width: auto;
         }
-
-        .preference-row {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .preference-label {
-          min-width: auto;
-          margin-right: 0;
-          margin-bottom: 10px;
-        }
-
-        .toggle-box {
-          width: 100%;
-        }
-
-        .note-text {
-          margin-left: 0;
-        }
       }
 
       @media (max-width: 576px) {
@@ -587,9 +407,12 @@
           flex-direction: column;
           padding: 10px;
         }
-        .navbar-custom {
+        .navbar {
           margin-left: 0;
           border-radius: 20px;
+        }
+        .red-shape {
+          display: none;
         }
       }
     </style>
@@ -611,14 +434,16 @@
     <!-- Navbar -->
     <header class="navbar-container">
       <div class="logo">
-        <img src="./src/img/logo.png" alt="Rio Cargo Express Logo" />
+        <a href="#">
+          <img src="./src/img/logo.png" alt="Rio Cargo Express Logo"
+        /></a>
       </div>
-      <nav class="navbar-custom">
-        <ul class="navbar-nav-custom">
+      <nav class="navbar">
+        <ul>
           <!-- Tablero with dropdown -->
           <li class="dropdown">
             <a href="#">Tablero <i class="fas fa-caret-down"></i></a>
-            <ul class="dropdown-menu-custom">
+            <ul class="dropdown-menu">
               <li><a href="#">Registrar paquete</a></li>
               <li><a href="#">Estado de paquetes</a></li>
               <li><a href="#">Asociados</a></li>
@@ -629,7 +454,7 @@
           <!-- Liquidación with dropdown -->
           <li class="dropdown">
             <a href="#">Liquidación <i class="fas fa-caret-down"></i></a>
-            <ul class="dropdown-menu-custom">
+            <ul class="dropdown-menu">
               <li><a href="#">Liquidaciones Pendientes</a></li>
               <li><a href="#">Liquidaciones Canceladas</a></li>
               <li><a href="#">Cuentas Bancarias</a></li>
@@ -654,18 +479,16 @@
           <a href="javascript:void(0)" id="mailBtn"
             ><i class="fas fa-envelope"></i
           ></a>
-          <a href="javascript:void(0)" id="userBtn" class="profile-icon">
-            <img
+          <a href="javascript:void(0)" id="userBtn" class="profile"
+            ><img
               src="https://courier.riocargoexpress.com/assets/images/users/user.png"
               alt="profileLogo"
-              style="cursor: pointer"
-            />
-          </a>
+          /></a>
         </div>
       </nav>
     </header>
 
-    <!-- Dropdown cards -->
+    <!-- Dropdown cards - moved outside navbar -->
     <div class="dropdown-card" id="alertCard">
       <h6>Alertas</h6>
       <hr />
@@ -699,323 +522,159 @@
           margin-top: 5px;
         "
       >
-        <a href="#"><i class="fas fa-user"></i> Mi Perfil</a>
+        <a href="./index2.html"><i class="fas fa-user"></i> Mi Perfil</a>
         <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
       </div>
     </div>
 
     <!-- Heading outside container -->
-    <h2 class="text-center text-white mt-5 font-weight-bold pb-3">Perfil</h2>
+    <h2 class="text-center text-white mt-5 font-weight-bold pb-3">
+      Registrar paquete
+    </h2>
 
     <div class="container mt-3">
       <div class="row">
         <!-- Form Section -->
-        <div class="col-12">
+        <div class="col-lg-8 col-md-7">
           <div class="card-custom">
             <form>
-              <div class="row">
-                <!-- First Column: Profile Image -->
-                <div class="col-md-3 profile-image-col">
-                  <div class="casillero-text">
-                    Casillero<br />
-                    000000
-                  </div>
-                  <div
-                    class="profile-image-container"
-                    id="profileImageContainer"
-                  >
-                    <div class="profile-image">
-                      <img
-                        src="https://courier.riocargoexpress.com/assets/images/users/user.png"
-                        alt="User Profile"
-                      />
-                    </div>
-                    <div class="camera-icon">
-                      <i class="fas fa-camera"></i>
-                    </div>
-                  </div>
-                  <button type="submit" class="btn btn-save mt-3">
-                    Guardar información
-                  </button>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="tracking">Número de tracking</label>
+                  <input type="text" id="tracking" class="form-control" />
                 </div>
-
-                <!-- Second Column: Nombres, Cédula/RUC, Dirección, Ciudad, Género -->
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="nombres">Nombres*</label>
-                    <input
-                      type="text"
-                      id="nombres"
-                      class="form-control form-control-custom"
-                      placeholder="Nombres"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="cedula">Cédula/RUC*</label>
-                    <input
-                      type="text"
-                      id="cedula"
-                      class="form-control form-control-custom"
-                      placeholder="0000000000"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="direccion">Dirección*</label>
-                    <input
-                      type="text"
-                      id="direccion"
-                      class="form-control form-control-custom"
-                      placeholder="Dirección"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="ciudad">Ciudad*</label>
-                    <select
-                      id="ciudad"
-                      class="form-control form-control-custom"
-                      required
-                    >
-                      <option value="" selected disabled>
-                        Seleccionar ciudad
-                      </option>
-                      <option value="guayaquil">Guayaquil</option>
-                      <option value="alto-tambo">Alto Tambo</option>
-                      <option value="balao">Balao</option>
-                      <option value="balzar">Balzar</option>
-                      <option value="colimes">Colimes</option>
-                      <option value="coronel-marcelino-mariduena">
-                        Coronel Marcelino Maridueña
-                      </option>
-                      <option value="daule">Daule</option>
-                      <option value="duran">Durán</option>
-                      <option value="el-empalme">El Empalme</option>
-                      <option value="el-triunfo">El Triunfo</option>
-                      <option value="general-antonio-elizalde">
-                        General Antonio Elizalde
-                      </option>
-                      <option value="guayaquil">Guayaquil</option>
-                      <option value="isidro-ayora">Isidro Ayora</option>
-                      <option value="lomas-de-sargentillo">
-                        Lomas de Sargentillo
-                      </option>
-                      <option value="milagro">Milagro</option>
-                      <option value="naranjal">Naranjal</option>
-                      <option value="naranjito">Naranjito</option>
-                      <option value="nobol">Nobol</option>
-                      <option value="palestina">Palestina</option>
-                      <option value="pedro-carbo">Pedro Carbo</option>
-                      <option value="playas">Playas</option>
-                      <option value="salitre">Salitre</option>
-                      <option value="samborondon">Samborondón</option>
-                      <option value="san-jacinto-de-yaguachi">
-                        San Jacinto de Yaguachi
-                      </option>
-                      <option value="santa-lucia">Santa Lucía</option>
-                      <option value="simon-bolivar">Simón Bolívar</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="genero">Género*</label>
-                    <select
-                      id="genero"
-                      class="form-control form-control-custom"
-                      required
-                    >
-                      <option value="" selected disabled>
-                        Seleccionar género
-                      </option>
-                      <option value="masculino">Masculino</option>
-                      <option value="femenino">Femenino</option>
-                      <option value="otro">Otro</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Third Column: Apellidos, Celular, Provincia, Fecha de nacimiento, Referencia -->
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="apellidos">Apellidos*</label>
-                    <input
-                      type="text"
-                      id="apellidos"
-                      class="form-control form-control-custom"
-                      placeholder="Apellidos"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="celular">Celular*</label>
-                    <input
-                      type="text"
-                      id="celular"
-                      class="form-control form-control-custom"
-                      placeholder="0000000000"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="provincia">Provincia*</label>
-                    <select
-                      id="provincia"
-                      class="form-control form-control-custom"
-                      required
-                    >
-                      <option value="" selected disabled>
-                        Seleccionar provincia
-                      </option>
-                      <option value="">-- Select a Province --</option>
-                      <option value="azuay">Azuay</option>
-                      <option value="bolivar">Bolívar</option>
-                      <option value="canar">Cañar</option>
-                      <option value="carchi">Carchi</option>
-                      <option value="chimborazo">Chimborazo</option>
-                      <option value="cotopaxi">Cotopaxi</option>
-                      <option value="el-oro">El Oro</option>
-                      <option value="esmeraldas">Esmeraldas</option>
-                      <option value="galapagos">Galápagos</option>
-                      <option value="guayas">Guayas</option>
-                      <option value="imbabura">Imbabura</option>
-                      <option value="loja">Loja</option>
-                      <option value="los-rios">Los Ríos</option>
-                      <option value="manabi">Manabí</option>
-                      <option value="morona-santiago">Morona Santiago</option>
-                      <option value="napo">Napo</option>
-                      <option value="orellana">Orellana</option>
-                      <option value="pastaza">Pastaza</option>
-                      <option value="pichincha">Pichincha</option>
-                      <option value="santa-elena">Santa Elena</option>
-                      <option value="santo-domingo">
-                        Santo Domingo de los Tsáchilas
-                      </option>
-                      <option value="sucumbios">Sucumbíos</option>
-                      <option value="tungurahua">Tungurahua</option>
-                      <option value="zamora-chinchipe">Zamora Chinchipe</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de nacimiento*</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        id="fecha_nacimiento"
-                        class="form-control form-control-custom"
-                        placeholder="Seleccionar fecha"
-                      />
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fas fa-calendar-alt"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="referencia">¿Cómo escuchó de nosotros?*</label>
-                    <select
-                      id="referencia"
-                      class="form-control form-control-custom"
-                      required
-                    >
-                      <option value="" selected disabled>
-                        Seleccionar una opción
-                      </option>
-                      <option value="instagram">Instagram</option>
-                      <option value="facebook">Facebook</option>
-                      <option value="tiktok">TikTok</option>
-                      <option value="google">Google</option>
-                      <option value="recomendado">Recomendado</option>
-                      <option value="otros">Otros</option>
-                    </select>
-                  </div>
+                <div class="form-group col-md-6">
+                  <label for="valor">Valor de la compra</label>
+                  <input type="text" id="valor" class="form-control" />
                 </div>
               </div>
 
-              <!-- Preference Section - aligned with columns 2 and 3 -->
-              <div class="row">
-                <div class="col-md-3"></div>
-                <!-- Empty column to offset -->
-                <div class="col-md-8">
-                  <div class="preference-section">
-                    <h4>Preferencia de retiro</h4>
+              <label>Por favor suba su factura de compra</label>
+              <div
+                class="upload-box"
+                id="uploadBox"
+                onclick="document.getElementById('fileInput').click()"
+              >
+                Suelte los archivos aquí o haga click para cargar.
+              </div>
+              <input
+                type="file"
+                id="fileInput"
+                multiple
+                style="display: none"
+              />
 
-                    <!-- First row: Retiro en agencia + Seleccionar agencia -->
-                    <div class="preference-row">
-                      <div class="preference-label">
-                        <label class="toggle-box">
-                          <input type="radio" name="retiro" /> Retiro en agencia
-                        </label>
-                      </div>
-                      <div class="agency-select">
-                        <select
-                          class="form-control form-control-custom"
-                          required
-                        >
-                          <option value="" selected disabled>
-                            Seleccionar agencia
-                          </option>
-                          <option value="agencia1">
-                            Agencia Principal - Guayaquil
-                          </option>
-                          <option value="agencia2">
-                            Agencia Norte - Quito
-                          </option>
-                          <option value="agencia3">Agencia Sur - Cuenca</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <!-- Second row: Envío a domicilio + Tus direcciones -->
-                    <div class="preference-row">
-                      <div class="preference-label">
-                        <label class="toggle-box">
-                          <input type="radio" name="retiro" /> Envío a domicilio
-                        </label>
-                      </div>
-                      <div class="agency-select">
-                        <select
-                          class="form-control form-control-custom"
-                          required
-                        >
-                          <option value="" selected disabled>
-                            Tus direcciones
-                          </option>
-                          <option value="direccion1">
-                            Dirección Principal
-                          </option>
-                          <option value="direccion2">
-                            Dirección de Trabajo
-                          </option>
-                          <option value="direccion3">Otra Dirección</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <p class="note-text pl-5">
-                      El servicio a domicilio tiene un costo adicional. Para
-                      confirmar los valores, por favor comunicarse al Whatsapp
-                      +593 98 65 9819.
-                    </p>
-                  </div>
+              <div class="form-row mt-3">
+                <div class="form-group col-md-4">
+                  <label>Gestión de pedido*</label><br />
+                  <label class="toggle-box">
+                    <input type="radio" name="pedido" /> Agrupar compras
+                  </label>
+                  <label class="toggle-box">
+                    <input type="radio" name="pedido" /> Embarque Inmediato
+                  </label>
                 </div>
+                <div class="form-group col-md-4">
+                  <label>Detalles del empaque</label><br />
+                  <label class="toggle-box">
+                    <input type="checkbox" /> Más protección
+                  </label>
+                  <label class="toggle-box">
+                    <input type="checkbox" /> Revisión detallada
+                  </label>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Categoría</label><br />
+                  <label class="toggle-box">
+                    <input type="checkbox" /> Categoría B
+                  </label>
+                  <label class="toggle-box">
+                    <input type="checkbox" /> Categoría C
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="nota">Nota</label>
+                <input type="text" id="nota" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="cupon">Cupón de descuento</label>
+                <input type="text" id="cupon" class="form-control" />
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-save">Guardar</button>
               </div>
             </form>
           </div>
         </div>
+        <!-- Mi Casillero -->
+        <div class="col-lg-4 col-md-5">
+          <div class="mi-casillero">
+            <h5 class="mb-3 text-center font-weight-bold">Mi casillero</h5>
+
+            <div class="casillero-box">
+              <div class="field">
+                <div class="item-main">
+                  Nombre
+                  <button class="copy-btn"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="item-sub">
+                  571017 - Roxana Maria Castillo Ottati
+                </div>
+              </div>
+              <hr />
+
+              <div class="field">
+                <div class="item-main">
+                  Dirección
+                  <button class="copy-btn"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="item-sub">12992 NW 42 Ave Ste 126</div>
+              </div>
+              <hr />
+
+              <div class="field">
+                <div class="item-main">
+                  Ciudad
+                  <button class="copy-btn"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="item-sub">OPA LOCKA</div>
+              </div>
+              <hr />
+
+              <div class="field">
+                <div class="item-main">
+                  Estado
+                  <button class="copy-btn"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="item-sub">FLORIDA</div>
+              </div>
+              <hr />
+
+              <div class="field">
+                <div class="item-main">
+                  Código Postal
+                  <button class="copy-btn"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="item-sub">33054-4403</div>
+              </div>
+              <hr />
+
+              <div class="field">
+                <div class="item-main">
+                  Teléfono
+                  <button class="copy-btn"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="item-sub">305 967 8269</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap Datepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
-
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const cards = {
@@ -1024,19 +683,6 @@
           mailBtn: "mailCard",
           userBtn: "userCard",
         };
-
-        // Initialize datepicker with modern styling
-        $("#fecha_nacimiento").datepicker({
-          format: "dd/mm/yyyy",
-          language: "es",
-          autoclose: true,
-          todayHighlight: true,
-          endDate: new Date(),
-          templates: {
-            leftArrow: '<i class="fas fa-chevron-left"></i>',
-            rightArrow: '<i class="fas fa-chevron-right"></i>',
-          },
-        });
 
         // Function to show custom alert
         function showAlert(message) {
@@ -1058,6 +704,19 @@
               alertContainer.style.display = "none";
             }, 500);
           }, 3000);
+        }
+
+        // Function to copy text to clipboard
+        function copyToClipboard(text) {
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              showAlert("Texto copiado: " + text);
+            })
+            .catch((err) => {
+              console.error("Error al copiar: ", err);
+              showAlert("Error al copiar el texto");
+            });
         }
 
         function toggleCard(cardId) {
@@ -1090,44 +749,21 @@
           card.addEventListener("click", (e) => e.stopPropagation());
         });
 
-        // Profile image upload functionality
-        const profileImageContainer = document.getElementById(
-          "profileImageContainer"
-        );
-
-        profileImageContainer.addEventListener("click", function () {
-          const input = document.createElement("input");
-          input.type = "file";
-          input.accept = "image/*";
-
-          input.onchange = function (e) {
-            const file = e.target.files[0];
-            if (file) {
-              const reader = new FileReader();
-              reader.onload = function (event) {
-                const profileImage =
-                  profileImageContainer.querySelector(".profile-image");
-                profileImage.innerHTML = "";
-                const img = document.createElement("img");
-                img.src = event.target.result;
-                img.className = "w-100 h-100";
-                profileImage.appendChild(img);
-                showAlert("Foto de perfil actualizada correctamente");
-              };
-              reader.readAsDataURL(file);
-            }
-          };
-
-          input.click();
-        });
-
-        // Form submission
-        const form = document.querySelector("form");
-        form.addEventListener("submit", function (e) {
-          e.preventDefault();
-          showAlert("Información guardada correctamente");
+        // Add copy functionality to all copy buttons
+        document.querySelectorAll(".copy-btn").forEach((button) => {
+          button.addEventListener("click", function (e) {
+            e.stopPropagation(); // Prevent closing dropdowns if any are open
+            const textToCopy = this.closest(".field")
+              .querySelector(".item-sub")
+              .textContent.trim();
+            copyToClipboard(textToCopy);
+          });
         });
       });
     </script>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
